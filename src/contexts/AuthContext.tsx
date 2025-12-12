@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../services/api';
+
 
 interface User {
   id: string;
@@ -12,10 +12,12 @@ interface User {
 
 interface AuthContextType {
   user: User | null;
-  signIn: (email: string, password: string) => Promise<void>;
+  signIn: (email: string, password: string) => Promise<void>; // <-- obligatoire
   signOut: () => void;
   loading: boolean;
 }
+
+
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -32,23 +34,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setLoading(false);
   }, []);
 
-  const signIn = async (email: string, password: string) => {
-    try {
-      const response = await auth.login(email, password);
-      const { token, user } = response;
-      
-      localStorage.setItem('userInfo', JSON.stringify(user));
-      localStorage.setItem('token', token);
-      
-      setUser(user);
-      
-      // Redirection après connexion réussie
-      navigate('/admin/dashboard');
-    } catch (error) {
-      console.error('Login failed:', error);
-      throw new Error('Échec de la connexion');
+const signIn = async (email: string, password: string) => {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Identifiants invalides');
     }
-  };
+
+    // Stocker séparément le token admin
+    localStorage.setItem('adminToken', data.token);
+    localStorage.setItem('adminInfo', JSON.stringify(data.user));
+
+    setUser(data.user);
+  } catch (error) {
+    console.error('Login admin failed:', error);
+    throw new Error(error instanceof Error ? error.message : 'Login admin échoué');
+  }
+};
+
 
   const signOut = () => {
     localStorage.removeItem('userInfo');
@@ -58,9 +68,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut, loading }}>
-      {!loading && children}
-    </AuthContext.Provider>
+  <AuthContext.Provider value={{ user, signIn, signOut, loading }}>
+    {!loading && children}
+  </AuthContext.Provider>
+
+
   );
 };
 

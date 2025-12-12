@@ -10,27 +10,24 @@ const AdminLogin: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { signIn } = useAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
+const { signIn } = useAuth(); // Remplacer signIn
 
-    try {
-      await signIn(email, password);
-      // Add a small delay to ensure the user state is updated
-      setTimeout(() => {
-        navigate('/admin/dashboard', { replace: true });
-      }, 100);
-    } catch (error) {
-      setError('Identifiants invalides');
-      console.error('Login error:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
+  setError('');
+
+  try {
+    await signIn(email, password); // ← login admin
+    navigate('/admin/dashboard', { replace: true });
+  } catch (err) {
+    setError(err instanceof Error ? err.message : 'Identifiants invalides');
+  } finally {
+    setLoading(false);
+  }
+};
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
