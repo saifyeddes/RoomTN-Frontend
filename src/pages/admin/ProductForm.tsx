@@ -135,10 +135,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onClose })
       return;
     }
     
-    if (formData.images.length === 0) {
-      alert('Veuillez ajouter au moins une image');
-      return;
-    }
     
     const colorsArr = (formData.colors || []).filter(Boolean);
     if (colorsArr.length === 0) {
@@ -162,10 +158,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onClose })
     data.append('name', formData.name.trim());
     data.append('description', formData.description.trim());
     data.append('price', String(Number(formData.price).toFixed(3)));
-    data.append('colors', JSON.stringify(colorsArr.map(c => ({
-      name: c,
-      code: c.startsWith('#') ? c : `#${Math.floor(Math.random()*16777215).toString(16)}`
-    }))));
+    data.append('colors', JSON.stringify(colorsArr));
     data.append('sizes', JSON.stringify(sizesClean));
     data.append('stock', String(Math.floor(formData.stock_quantity)));
     data.append('is_new', 'true');
