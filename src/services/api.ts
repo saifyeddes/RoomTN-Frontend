@@ -14,10 +14,10 @@ const api = axios.create({
 
 // Intercepteur pour ajouter le token JWT aux requêtes
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  const token = localStorage.getItem('adminToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   return config;
 });
 
