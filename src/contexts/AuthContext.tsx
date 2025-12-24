@@ -36,11 +36,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 const signIn = async (email: string, password: string) => {
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
+    const response = await fetch(
+      'https://roomtn.onrender.com/api/auth/admin/login',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      }
+    );
 
     const data = await response.json();
 
@@ -48,21 +51,25 @@ const signIn = async (email: string, password: string) => {
       throw new Error(data.message || 'Identifiants invalides');
     }
 
-    // Stocker séparément le token admin
+    // ✅ Stockage admin
     localStorage.setItem('adminToken', data.token);
     localStorage.setItem('adminInfo', JSON.stringify(data.user));
 
     setUser(data.user);
   } catch (error) {
     console.error('Login admin failed:', error);
-    throw new Error(error instanceof Error ? error.message : 'Login admin échoué');
+    throw new Error(
+      error instanceof Error ? error.message : 'Login admin échoué'
+    );
   }
 };
 
 
+
   const signOut = () => {
-    localStorage.removeItem('userInfo');
-    localStorage.removeItem('token');
+    localStorage.removeItem('adminInfo');
+    localStorage.removeItem('adminToken');
+
     setUser(null);
     navigate('/admin');
   };
