@@ -7,9 +7,6 @@ export const ASSETS_BASE = API_URL.replace(/\/?api\/?$/, '');
 
 const api = axios.create({
   baseURL: API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
 // Intercepteur pour ajouter le token JWT aux requêtes
@@ -93,31 +90,35 @@ export const products = {
     const res = await api.get('/products', { params });
     return res.data;
   },
+
   getById: async (id: string) => {
     const res = await api.get(`/products/${id}`);
     return res.data;
   },
+
   getBest: async (limit?: number) => {
     const res = await api.get('/products/best', { params: { limit } });
     return res.data;
   },
+
   create: async (formData: FormData) => {
-    const res = await api.post('/products', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    // ✅ NE PAS METTRE DE HEADERS
+    const res = await api.post('/products', formData);
     return res.data;
   },
+
   update: async (id: string, formData: FormData) => {
-    const res = await api.put(`/products/${id}`, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
+    // ✅ NE PAS METTRE DE HEADERS
+    const res = await api.put(`/products/${id}`, formData);
     return res.data;
   },
+
   delete: async (id: string) => {
     const res = await api.delete(`/products/${id}`);
     return res.data;
   },
 };
+
 
 export const adminUsers = {
   list: async () => {
