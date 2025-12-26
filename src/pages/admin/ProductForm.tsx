@@ -154,17 +154,23 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onClose })
     }
     
     // Si tout est valide, on envoie les données
-    const data = new FormData();
+      const data = new FormData();
+
     data.append('name', formData.name.trim());
     data.append('description', formData.description.trim());
-    data.append('price', String(Number(formData.price).toFixed(3)));
-    data.append('colors', JSON.stringify(colorsArr));
-    data.append('sizes', JSON.stringify(sizesClean));
-    data.append('stock', String(Math.floor(formData.stock_quantity)));
+    data.append('price', String(formData.price));
+    data.append('category', 'unisexe'); // FIXED
+    data.append('stock', String(formData.stock_quantity));
+    data.append('sizes', JSON.stringify(
+      formData.sizes.filter(Boolean)
+    ));
+    data.append('colors', JSON.stringify(
+      formData.colors.filter(Boolean)
+    ));
     data.append('is_new', 'true');
-    
-    // Ajout des images
-    formData.images.forEach((img) => {
+
+    // images (OPTIONNELLES)
+    formData.images.forEach(img => {
       if (img instanceof File) {
         data.append('images', img);
       }
