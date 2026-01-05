@@ -60,7 +60,7 @@ const ProductDetail: React.FC = () => {
           images: Array.isArray(data.images) ? data.images.map((img) => `${ASSETS_BASE}${img.url}`) : [],
           sizes: data.sizes || [],
           colors: Array.isArray(data.colors) ? data.colors.map((c) => (typeof c === 'string' ? c : c.name || c.code || '')) : [],
-          stock_quantity: data.stock ?? 0,
+          stock: data.stock ?? 0,
           is_featured: !!data.is_featured,
           created_at: data.createdAt,
           rating: 5,
@@ -95,7 +95,7 @@ const ProductDetail: React.FC = () => {
     colors: Array.isArray(p.colors) 
       ? p.colors.map((c) => (typeof c === 'string' ? c : c.name || c.code || '')) 
       : [],
-    stock_quantity: p.stock ?? 0,
+    stock: p.stock ?? 0,
     is_featured: !!p.is_featured,
     created_at: p.createdAt,
     rating: 5,
@@ -380,7 +380,7 @@ const ProductDetail: React.FC = () => {
                     <p className="text-3xl font-bold text-gray-900">
                       {formatPrice(product.price)}
                     </p>
-                    <span className="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full bg-green-50 text-green-700 ring-1 ring-green-100">En stock: {product.stock_quantity}</span>
+                    <span className="inline-flex items-center px-2 py-1 text-xs font-medium rounded-full bg-green-50 text-green-700 ring-1 ring-green-100">En stock: {product.stock}</span>
                   </div>
                   <p className="text-gray-600 leading-relaxed">{product.description}</p>
                 </div>

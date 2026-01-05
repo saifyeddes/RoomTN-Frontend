@@ -24,7 +24,7 @@ export interface Product {
   sizes: string[];
   colors: string[];
   rating: 4 | 4.5 | 5;
-  stock_quantity: number;
+  stock: number;
   is_featured: boolean;
   created_at: string;
 }

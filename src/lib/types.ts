@@ -16,7 +16,7 @@ export interface Product {
   sizes: string[];
   colors: string[];
   gender: string;
-  stock_quantity: number;
+  stock: number;
   is_featured: boolean;
   created_at: string;
 }

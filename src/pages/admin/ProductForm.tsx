@@ -25,7 +25,7 @@ type FormDataType = {
   images: (string | File)[];
   sizes: string[];
   colors: string[];
-  stock_quantity: number;
+  stock: number;
   created_at: string;
 };
 
@@ -36,7 +36,7 @@ const initialState: FormDataType = {
   images: [],
   sizes: [''],
   colors: [''],
-  stock_quantity: 0,
+  stock: 0,
   created_at: new Date().toISOString(), // Add created_at to satisfy the type
 };
 
@@ -54,7 +54,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onClose })
         images: existingImages,
         sizes: product.sizes || [''],
         colors: product.colors || [''],
-        stock_quantity: product.stock_quantity || 0,
+        stock: product.stock || 0,
         created_at: product.created_at || new Date().toISOString(),
       });
       setImagePreviews(existingImages);
@@ -141,7 +141,7 @@ const handleSubmit = (e: React.FormEvent) => {
   data.append('description', formData.description.trim());
   data.append('price', String(formData.price));
   data.append('category', 'unisexe');
-  data.append('stock', String(formData.stock_quantity));
+  data.append('stock', String(formData.stock));
 
   // ✅ ICI LA CORRECTION CLÉ
   data.append('sizes', JSON.stringify(formData.sizes));
@@ -303,14 +303,14 @@ const handleSubmit = (e: React.FormEvent) => {
 </div>
 
       <div className="space-y-1">
-        <label htmlFor="stock_quantity" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="stock" className="block text-sm font-medium text-gray-700">
           Quantité en stock <span className="text-red-500">*</span>
         </label>
         <input
           type="number"
-          id="stock_quantity"
-          name="stock_quantity"
-          value={formData.stock_quantity}
+          id="stock"
+          name="stock"
+          value={formData.stock}
           onChange={handleChange}
           min="0"
           step="1"

@@ -35,7 +35,7 @@ const ProductManagement: React.FC = () => {
       images: formattedImages,
       sizes: p.sizes || [],
       colors: Array.isArray(p.colors) ? p.colors.map((c) => (typeof c === 'string' ? c : c.name || c.code || '')) : [],
-      stock_quantity: p.stock ?? 0,
+      stock: p.stock ?? 0,
       is_featured: !!p.is_featured,
       created_at: p.createdAt,
       rating: 5,
@@ -273,8 +273,8 @@ const ProductManagement: React.FC = () => {
                   <span className="ml-1 text-xs font-medium text-indigo-600 whitespace-nowrap">{product.price.toFixed(3)} TND</span>
                 </div>
                 <div className="mt-1 flex items-center justify-between">
-                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${product.stock_quantity > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                    {product.stock_quantity > 0 ? `${product.stock_quantity}` : 'Rupture'}
+                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${product.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                    {product.stock > 0 ? `${product.stock}` : 'Rupture'}
                   </span>
                   {product.category?.name && (
                     <span className="text-[10px] text-gray-500 bg-gray-100 px-1 py-0.5 rounded truncate max-w-[80px]">

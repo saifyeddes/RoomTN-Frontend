@@ -51,7 +51,7 @@ const Home: React.FC = () => {
     images: Array.isArray(p.images) ? p.images.map((img) => `${ASSETS_BASE}${img.url}`) : [],
     sizes: p.sizes || [],
     colors: Array.isArray(p.colors) ? p.colors.map((c) => (typeof c === 'string' ? c : c.name || c.code || '')) : [],
-    stock_quantity: p.stock ?? 0,
+    stock: p.stock ?? 0,
     is_featured: !!p.is_featured,
     created_at: p.createdAt,
     rating: 5,

@@ -211,12 +211,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart }) => {
             Nouveau
           </span>
         )}
-        {product.stock_quantity < 5 && product.stock_quantity > 0 && (
+        {product.stock < 5 && product.stock > 0 && (
           <span className="bg-red-500 text-white text-xs font-medium text-center px-2 py-1 rounded-lg">
-            {product.stock_quantity === 1 ? 'Reste une seule' : 'Stock Limité'}
+            {product.stock === 1 ? 'Reste une seule' : 'Stock Limité'}
           </span>
         )}
-        {product.stock_quantity === 0 && (
+        {product.stock === 0 && (
           <span className="bg-gray-500 text-white text-xs font-medium text-center px-2 py-1 rounded-lg">
             Épuisé
           </span>

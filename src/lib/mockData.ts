@@ -25,7 +25,7 @@ export const mockProducts: Product[] = [
     sizes: ['XS', 'S', 'M', 'L'],
     colors: ['Blanc cassé', 'Noir', 'Gris', 'Rose poudré'],
     rating: 4.5,
-    stock_quantity: 28,
+    stock: 28,
     is_featured: true,
     created_at: '2025-07-18T00:00:00Z'
   },
@@ -43,7 +43,7 @@ export const mockProducts: Product[] = [
     sizes: ['M', 'L', 'XL'],
     colors: ['Noir', 'Bleu', 'Rouge'],
     rating: 4,
-    stock_quantity: 30,
+    stock: 30,
     is_featured: true,
     created_at: '2025-07-15T00:00:00Z'
   },
@@ -61,7 +61,7 @@ export const mockProducts: Product[] = [
     sizes: ['S', 'M', 'L', 'XL'],
     colors: ['Bleu marine', 'Blanc', 'Noir'],
     rating: 4.5,
-    stock_quantity: 20,
+    stock: 20,
     is_featured: false,
     created_at: '2025-01-01T00:00:00Z'
   },
@@ -76,7 +76,7 @@ export const mockProducts: Product[] = [
     sizes: ['M', 'L', 'XL'],
     colors: ['Beige', 'Kaki', 'Marron'],
     rating: 4.5,
-    stock_quantity: 1, // Will show as 'Stock Limité' (Low Stock)
+    stock: 1, // Will show as 'Stock Limité' (Low Stock)
     is_featured: false,
     created_at: '2025-01-01T00:00:00Z'
   },
@@ -93,7 +93,7 @@ export const mockProducts: Product[] = [
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Rose', 'Blanc', 'Noir', 'Lavande'],
     rating: 4.5,
-    stock_quantity: 30,
+    stock: 30,
     is_featured: true, // Will show as 'Nouveau' (New)
     created_at: '2025-01-01T00:00:00Z'
   },
@@ -108,7 +108,7 @@ export const mockProducts: Product[] = [
     sizes: ['XS', 'S', 'M', 'L'],
     colors: ['Noir', 'Blanc', 'Gris', 'Bleu'],
     rating: 4.5,
-    stock_quantity: 22,
+    stock: 22,
     is_featured: false,
     created_at: '2025-01-01T00:00:00Z'
   },
@@ -123,7 +123,7 @@ export const mockProducts: Product[] = [
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Blanc', 'Rose', 'Bleu'],
     rating: 4.5,
-    stock_quantity: 0, // Will show as 'Épuisé' (Out of Stock)
+    stock: 0, // Will show as 'Épuisé' (Out of Stock)
     is_featured: false,
     created_at: '2025-01-01T00:00:00Z'
   },
@@ -138,7 +138,7 @@ export const mockProducts: Product[] = [
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: ['Blanc', 'Rose', 'Bleu'],
     rating: 4.5,
-    stock_quantity: 4, // Will show as 'Stock Limité' (Low Stock)
+    stock: 4, // Will show as 'Stock Limité' (Low Stock)
     is_featured: false,
     created_at: '2025-01-01T00:00:00Z'
   },
@@ -149,7 +149,7 @@ export const mockProducts: Product[] = [
     name: 'T-Shirt Enfant Coloré',
     description: 'T-shirt amusant pour enfants avec couleurs vives. Coton hypoallergénique et résistant aux lavages.',
     price: 22.000,
-    stock_quantity: 0, // Will show as 'Épuisé' (Out of Stock)
+    stock: 0, // Will show as 'Épuisé' (Out of Stock)
     category_id: '1',
     category: mockCategories[0],
     images: ['https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg'],
@@ -170,7 +170,7 @@ export const mockProducts: Product[] = [
     sizes: ['2-3 ans', '4-5 ans', '6-7 ans', '8-9 ans'],
     colors: ['Bleu', 'Rouge', 'Noir'],
     rating: 4.5,
-    stock_quantity: 30,
+    stock: 30,
     is_featured: true,
     created_at: '2025-01-01T00:00:00Z'
   },
@@ -185,7 +185,7 @@ export const mockProducts: Product[] = [
     sizes: ['2-3 ans', '4-5 ans', '6-7 ans', '8-9 ans', '10-11 ans'],
     colors: ['Rose', 'Violet', 'Blanc'],
     rating: 4.5,
-    stock_quantity: 25,
+    stock: 25,
     is_featured: false,
     created_at: '2025-01-01T00:00:00Z'
   },
@@ -200,7 +200,7 @@ export const mockProducts: Product[] = [
     sizes: ['4-5 ans', '6-7 ans', '8-9 ans', '10-11 ans', '12-13 ans'],
     colors: ['Bleu', 'Vert', 'Orange', 'Noir'],
     rating: 4.5,
-    stock_quantity: 35,
+    stock: 35,
     is_featured: true,
     created_at: '2025-01-01T00:00:00Z'
   }

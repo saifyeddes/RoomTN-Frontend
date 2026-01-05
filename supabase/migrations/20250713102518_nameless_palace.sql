@@ -25,7 +25,7 @@
       - `sizes` (json array)
       - `colors` (json array)
       - `gender` (enum: homme, femme, unisexe)
-      - `stock_quantity` (integer)
+      - `stock` (integer)
       - `is_featured` (boolean)
       - `created_at` (timestamp)
 
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS products (
   sizes json DEFAULT '[]',
   colors json DEFAULT '[]',
   gender gender_type NOT NULL,
-  stock_quantity integer DEFAULT 0 CHECK (stock_quantity >= 0),
+  stock integer DEFAULT 0 CHECK (stock >= 0),
   is_featured boolean DEFAULT false,
   created_at timestamptz DEFAULT now()
 );

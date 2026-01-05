@@ -20,7 +20,7 @@ ON CONFLICT (name) DO NOTHING;
 WITH category_ids AS (
   SELECT name, id FROM categories
 )
-INSERT INTO products (name, description, price, category_id, images, sizes, colors, gender, stock_quantity, is_featured) VALUES
+INSERT INTO products (name, description, price, category_id, images, sizes, colors, gender, stock, is_featured) VALUES
   -- T-Shirts
   (
     'T-Shirt Classique Coton Bio',
