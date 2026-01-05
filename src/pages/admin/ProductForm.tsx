@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from '../../types';
 import { X as XIcon } from 'lucide-react';
+const SIZE_OPTIONS = ['S', 'M', 'L', 'XL', 'XXL', '3XL'];
+const COLOR_OPTIONS = [
+  { label: 'Noir', value: '#000000' },
+  { label: 'Blanc', value: '#ffffff' },
+  { label: 'Rouge', value: '#ff0000' },
+  { label: 'Bleu', value: '#0000ff' }
+];
+
+const cleanSizes = (sizes: string[]) => Array.from(new Set(sizes)).filter(s => s);
+const cleanColors = (colors: string[]) => Array.from(new Set(colors)).filter(c => c);
 
 interface ProductFormProps {
   product: Product | null;
@@ -117,67 +127,37 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onClose })
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Validation des champs requis
-    if (!formData.name.trim()) {
-      alert('Veuillez saisir un nom pour le produit');
-      return;
-    }
-    
-    if (formData.price <= 0) {
-      alert('Le prix doit être supérieur à 0');
-      return;
-    }
-    
-    if (!formData.description.trim()) {
-      alert('Veuillez saisir une description pour le produit');
-      return;
-    }
-    
-    
-    const colorsArr = (formData.colors || []).filter(Boolean);
-    if (colorsArr.length === 0) {
-      alert('Veuillez ajouter au moins une couleur');
-      return;
-    }
-    
-    const sizesClean = (formData.sizes || []).filter(Boolean);
-    if (sizesClean.length === 0) {
-      alert('Veuillez ajouter au moins une taille');
-      return;
-    }
-    
-    if (formData.stock_quantity < 0) {
-      alert('La quantité en stock ne peut pas être négative');
-      return;
-    }
-    
-    // Si tout est valide, on envoie les données
-      const data = new FormData();
+  e.preventDefault();
 
-    data.append('name', formData.name.trim());
-    data.append('description', formData.description.trim());
-    data.append('price', String(formData.price));
-    data.append('category', 'unisexe'); // FIXED
-    data.append('stock', String(formData.stock_quantity));
-    data.append('sizes', JSON.stringify(
-      formData.sizes.filter(Boolean)
-    ));
-    data.append('colors', JSON.stringify(
-      formData.colors.filter(Boolean)
-    ));
-    data.append('is_new', 'true');
+  // validations simples
+  if (!formData.name.trim()) return alert('Nom obligatoire');
+  if (formData.price <= 0) return alert('Prix invalide');
+  if (!formData.description.trim()) return alert('Description obligatoire');
+  if (formData.sizes.length === 0) return alert('Choisir au moins une taille');
+  if (formData.colors.length === 0) return alert('Choisir au moins une couleur');
 
-    // images (OPTIONNELLES)
-    formData.images.forEach(img => {
-      if (img instanceof File) {
-        data.append('images', img);
-      }
-    });
-    
-    onSubmit(data);
-  };
+  const data = new FormData();
+
+  data.append('name', formData.name.trim());
+  data.append('description', formData.description.trim());
+  data.append('price', String(formData.price));
+  data.append('category', 'unisexe');
+  data.append('stock', String(formData.stock_quantity));
+
+  // ✅ ICI LA CORRECTION IMPORTANTE
+  data.append('sizes', JSON.stringify(formData.sizes));
+  data.append('colors', JSON.stringify(formData.colors));
+
+  // images
+  formData.images.forEach(img => {
+    if (img instanceof File) {
+      data.append('images', img);
+    }
+  });
+
+  onSubmit(data);
+};
+
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -270,74 +250,57 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onClose })
         </div>
       </div>
 
-      <div className="space-y-1">
-        <label className="block text-sm font-medium text-gray-700">Tailles <span className="text-red-500">*</span></label>
-        <div className="space-y-2">
-          {formData.sizes.map((size, index) => (
-            <div key={index} className="flex gap-2">
-              <input
-                type="text"
-                value={size}
-                onChange={(e) => handleArrayChange(index, e.target.value, 'sizes')}
-                className="block w-full rounded-lg border-gray-300 shadow-sm text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 p-2 border"
-                placeholder="Ex: S, M, L..."
-              />
-              <button
-                type="button"
-                onClick={() => removeArrayItem(index, 'sizes')}
-                className="px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-              >
-                <XIcon className="h-4 w-4" />
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={() => addArrayItem('sizes')}
-            className="text-xs text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1 mt-1"
-          >
-            <span>+</span> Ajouter une taille
-          </button>
-        </div>
-      </div>
 
-      <div className="space-y-1">
-        <label className="block text-sm font-medium text-gray-700">Couleurs <span className="text-red-500">*</span></label>
-        <div className="space-y-2">
-          {formData.colors.map((color, index) => (
-            <div key={index} className="flex gap-2">
-              <input
-                type="color"
-                value={/^#/.test(color) ? color : '#000000'}
-                onChange={(e) => handleArrayChange(index, e.target.value, 'colors')}
-                className="h-10 w-12 p-0 border border-gray-300 rounded-md bg-white"
-                title="Choisir une couleur"
-              />
-              <input
-                type="text"
-                value={color}
-                onChange={(e) => handleArrayChange(index, e.target.value, 'colors')}
-                className="ml-2 block w-full rounded-lg border-gray-300 shadow-sm text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 p-2 border"
-                placeholder="#000000 ou nom"
-              />
-              <button
-                type="button"
-                onClick={() => removeArrayItem(index, 'colors')}
-                className="px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-              >
-                <XIcon className="h-4 w-4" />
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={() => addArrayItem('colors')}
-            className="text-xs text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1 mt-1"
-          >
-            <span>+</span> Ajouter une couleur
-          </button>
-        </div>
-      </div>
+<div>
+  <label className="font-medium">Tailles *</label>
+  <div className="flex flex-wrap gap-3 mt-2">
+    {SIZE_OPTIONS.map(size => (
+      <label key={size} className="flex items-center gap-2">
+        <input
+          type="checkbox"
+          checked={formData.sizes.includes(size)}
+          onChange={(e) => {
+            setFormData(prev => ({
+              ...prev,
+              sizes: e.target.checked
+                ? [...prev.sizes, size]
+                : prev.sizes.filter(s => s !== size)
+            }));
+          }}
+        />
+        <span>{size}</span>
+      </label>
+    ))}
+  </div>
+</div>
+
+
+      <div>
+  <label className="font-medium">Couleurs *</label>
+  <div className="flex flex-wrap gap-4 mt-2">
+    {COLOR_OPTIONS.map(color => (
+      <label key={color.value} className="flex items-center gap-2">
+        <input
+          type="checkbox"
+          checked={formData.colors.includes(color.value)}
+          onChange={(e) => {
+            setFormData(prev => ({
+              ...prev,
+              colors: e.target.checked
+                ? [...prev.colors, color.value]
+                : prev.colors.filter(c => c !== color.value)
+            }));
+          }}
+        />
+        <span
+          className="w-4 h-4 rounded border"
+          style={{ backgroundColor: color.value }}
+        />
+        <span>{color.label}</span>
+      </label>
+    ))}
+  </div>
+</div>
 
       <div className="space-y-1">
         <label htmlFor="stock_quantity" className="block text-sm font-medium text-gray-700">
