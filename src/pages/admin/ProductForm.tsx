@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Product } from '../../types';
 import { X as XIcon } from 'lucide-react';
-const SIZE_OPTIONS = ['S', 'M', 'L', 'XL', 'XXL', '3XL'];
+const SIZE_OPTIONS = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
 const COLOR_OPTIONS = [
   { label: 'Noir', value: '#000000' },
   { label: 'Blanc', value: '#ffffff' },
