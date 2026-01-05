@@ -126,10 +126,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onClose })
     setFormData(prev => ({ ...prev, [field]: newArray }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+const handleSubmit = (e: React.FormEvent) => {
   e.preventDefault();
 
-  // validations simples
   if (!formData.name.trim()) return alert('Nom obligatoire');
   if (formData.price <= 0) return alert('Prix invalide');
   if (!formData.description.trim()) return alert('Description obligatoire');
@@ -144,7 +143,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onClose })
   data.append('category', 'unisexe');
   data.append('stock', String(formData.stock_quantity));
 
-  // ✅ ICI LA CORRECTION IMPORTANTE
+  // ✅ ICI LA CORRECTION CLÉ
   data.append('sizes', JSON.stringify(formData.sizes));
   data.append('colors', JSON.stringify(formData.colors));
 
@@ -157,6 +156,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onSubmit, onClose })
 
   onSubmit(data);
 };
+
 
 
   const handleFormSubmit = (e: React.FormEvent) => {
